@@ -1,7 +1,8 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/games'
-require './lib/event'
+require './lib/standard_deviation'
+
 
 class GamesTest < Minitest::Test
   def test_it_exists
@@ -19,50 +20,51 @@ class GamesTest < Minitest::Test
     assert_equal [], games.events
   end
 
-  def test_it_can_add_events
+   def test_it_can_add_events
     curling = Event.new("Curling", [24, 30, 18, 20, 41])
     ring_toss = Event.new("Ring Toss", [23, 22, 29, 18, 30])
     games = Games.new(2017)
     games.add_event(curling)
     games.add_event(ring_toss)
     assert_equal [curling, ring_toss], games.events
-  end
+   end
 
   def test_it_can_create_headers
     games = Games.new(2017)
-    expected = "Event          Max Age             Min Age             Average Age         StdDev Age"
+     expected = "Event          Max Age             Min Age             Average Age         StdDev Age"
     assert_equal expected, games.headers
   end
 
-  def test_it_can_create_a_single_event_summary
+   def test_it_can_create_a_single_event_summary
     curling = Event.new("Curling", [24, 30, 18, 20, 41])
-    games = Games.new(2017)
-    expected = "Curling        41                  18                  26.6                8.28"
-    assert_equal expected, games.event_summary(curling)
+     games = Games.new(2017)
+     expected = "Curling        41                  18                  26.6                8.28"
+     assert_equal expected, games.event_summary(curling)
   end
+
 
   def test_it_can_create_a_summary_for_all_events
     curling = Event.new("Curling", [24, 30, 18, 20, 41])
     ring_toss = Event.new("Ring Toss", [23, 22, 29, 18, 30])
-    games = Games.new(2017)
+     games = Games.new(2017)
     games.add_event(curling)
     games.add_event(ring_toss)
-    expected = "Curling        41                  18                  26.6                8.28\n" +
-               "Ring Toss      30                  18                  24.4                4.5"
-    assert_equal expected, games.all_events_summary
-  end
+     expected = "Curling        41                  18                  26.6                8.28\n" +
+                "Ring Toss      30                  18                  24.4                4.5"
+     assert_equal expected, games.all_events_summary
+   end
 
-  def test_it_can_create_a_summary_for_the_games
-    curling = Event.new("Curling", [24, 30, 18, 20, 41])
-    ring_toss = Event.new("Ring Toss", [23, 22, 29, 18, 30])
-    games = Games.new(2017)
-    games.add_event(curling)
-    games.add_event(ring_toss)
+   def test_it_can_create_a_summary_for_the_games
+     curling = Event.new("Curling", [24, 30, 18, 20, 41])
+     ring_toss = Event.new("Ring Toss", [23, 22, 29, 18, 30])
+     games = Games.new(2017)
+     games.add_event(curling)
+     games.add_event(ring_toss)
 
-    expected = "Event          Max Age             Min Age             Average Age         StdDev Age\n" +
-               "Curling        41                  18                  26.6                8.28\n" +
-               "Ring Toss      30                  18                  24.4                4.5"
+     expected = "Event          Max Age             Min Age             Average Age         StdDev Age\n" +
+                "Curling        41                  18                  26.6                8.28\n" +
+                "Ring Toss      30                  18                  24.4                4.5"
 
-    assert_equal expected, games.summary
-  end
-end
+     assert_equal expected, games.summary
+   end
+ end
